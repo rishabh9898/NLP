@@ -44,6 +44,5 @@ all_not_stop_words = nltk.FreqDist(all_not_stop_words)
 
 print(all_not_stop_words.most_common(15))
 
-
-# print(filtered_sentence)
+#  retrieves the most common words that are not stop words
 
