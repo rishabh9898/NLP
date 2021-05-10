@@ -7,6 +7,8 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import re, string
 import preprocessor as p
 import matplotlib.pyplot as plt
+from textblob import TextBlob
+
 
 lemma_tweets = []
 tweets = []
@@ -34,29 +36,22 @@ for i in range(len(tweets)):
 # ----------------------------------------------------------------------------------------------------
 #  Removes all the emojis from the tweets
 import emoji
-def give_emoji_free_text(text):
-    clean_text =emoji.get_emoji_regexp().sub("", text)
-    return clean_text
-
-for i in range(len(tweets)):
-    tweets[i] = give_emoji_free_text(tweets[i])
-# ----------------------------------------------------------------------------------------------------
-# Removes all Https
-def give_http_free_text(text):
-    text = re.sub(r'http\S+', '', text)
+def give_free_text(text):
+    text =emoji.get_emoji_regexp().sub("", text)
+    # removes all emojis
+    text = re.sub(r'http\S+', '', text) 
+    # Removes all hyperlinks
+    text = re.sub('@', '', text)
+    # Removes all @ 
     return text
 
 for i in range(len(tweets)):
-    tweets[i] = give_http_free_text(tweets[i])
-# -----------------------------------------------------------------------------------------------------
-#  Removes @ symbol in tweets 
-def give_atrate_free_text(text):
-    clean_without_attherate = re.sub('@', '', text)
-    return clean_without_attherate
+    tweets[i] = give_free_text(tweets[i])
 
-for i in range(len(tweets)):
-    tweets[i] = give_atrate_free_text(tweets[i])
-# -----------------------------------------------------------------------------------------------------
+
+sent = []
+sent.extend(tweets)
+# ----------------------------------------------------------------------------------------------------
 # Removing punctuations 
 def give_punct_free_text(text):
     tokenizer = nltk.RegexpTokenizer(r"\w+") 
@@ -85,3 +80,5 @@ for i in range(len(tweets)):
 
 
 # --------------------------------------------------------------------------------------------------
+
+
